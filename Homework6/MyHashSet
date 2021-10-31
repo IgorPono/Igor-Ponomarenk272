@@ -1,0 +1,164 @@
+import java.util.*;
+import java.security.*;
+import java.io.*;
+
+public class MyHashSet {
+    //public static int tableSize = 262127;
+    //public static int tableSize2 = 262144;
+    public static int tableSize = 524287;
+    public static int tableSize2 = 524288;
+
+    public static void main(String[] args) throws FileNotFoundException {
+        File MyFile = new File("src/EnglishWordList.txt");
+        Scanner MyScannerA = new Scanner(MyFile);
+        Scanner MyScannerB = new Scanner(MyFile);
+        Scanner MyScannerC = new Scanner(MyFile);
+        //int tableSize = 262127;
+        ArrayList<LinkedList<String>> MyHashSetA = new ArrayList<LinkedList<String>>(tableSize);
+        ArrayList<LinkedList<String>> MyHashSetB = new ArrayList<LinkedList<String>>(tableSize);
+        ArrayList<LinkedList<String>> MyHashSetC = new ArrayList<LinkedList<String>>(tableSize);
+        int collisionsA = 0;
+        int collisionsB = 0;
+        int collisionsC = 0;
+        int nonEmptyListsA = 0;
+        int nonEmptyListsB = 0;
+        int nonEmptyListsC = 0;
+        double sumA = 0;
+        double sumB = 0;
+        double sumC = 0;
+        for (int i = 0; i < tableSize; i++) {
+            MyHashSetA.add(new LinkedList<String>());
+            MyHashSetB.add(new LinkedList<String>());
+        }
+        for (int i = 0; i < tableSize2; i++) {
+            MyHashSetC.add(new LinkedList<String>());
+        }
+        double firstTimeA = System.currentTimeMillis();
+        while (MyScannerA.hasNext()) {
+            String s = MyScannerA.next();
+            int position = (Math.abs(hashCode(s))) % tableSize;
+
+            if (!MyHashSetA.get(position).contains(s)) {
+                if (MyHashSetA.get(position).size() != 0)
+                    collisionsA++;
+                MyHashSetA.get(position).add(s);
+            }
+        }
+        double secondTimeA = System.currentTimeMillis();
+
+
+        for (int i = 0; i < tableSize; i++) {
+            if (!MyHashSetA.get(i).isEmpty()) {
+                nonEmptyListsA++;
+                sumA += MyHashSetA.get(i).size();
+            }
+        }
+        System.out.println("Runtime of hashcodeA was " + (secondTimeA - firstTimeA));
+        System.out.println("Average list length of hashcodeA was " + (sumA / nonEmptyListsA));
+        System.out.println("Collisions of hashcodeA were " + collisionsA);
+        System.out.println();
+
+        double firstTimeB = System.currentTimeMillis();
+        while (MyScannerB.hasNext()) {
+            String s = MyScannerB.next();
+            int position = (Math.abs(hashCode2(s))) % tableSize;
+
+            if (!MyHashSetB.get(position).contains(s)) {
+                if (MyHashSetB.get(position).size() != 0)
+                    collisionsB++;
+                MyHashSetB.get(position).add(s);
+            }
+        }
+        double secondTimeB = System.currentTimeMillis();
+
+        for (int i = 0; i < tableSize; i++) {
+            if (!MyHashSetB.get(i).isEmpty()) {
+                nonEmptyListsB++;
+                sumB += MyHashSetB.get(i).size();
+            }
+        }
+
+        System.out.println("Runtime of hashcodeB was " + (secondTimeB - firstTimeB));
+        System.out.println("Average list length of hashcodeB was " + (sumB / nonEmptyListsB));
+        System.out.println("Collisions of hashcodeB were " +collisionsB);
+        System.out.println();
+
+
+        double firstTimeC = System.currentTimeMillis();
+        while (MyScannerC.hasNext()) {
+            String s = MyScannerC.next();
+            int position = (Math.abs(hashCode3(s))) % tableSize2;
+
+            if (!MyHashSetC.get(position).contains(s)) {
+                if (MyHashSetC.get(position).size() != 0)
+                    collisionsC++;
+                MyHashSetC.get(position).add(s);
+            }
+        }
+        double secondTimeC = System.currentTimeMillis();
+
+        for (int i = 0; i < tableSize2; i++) {
+            if (!MyHashSetC.get(i).isEmpty()) {
+                nonEmptyListsC++;
+                sumC += MyHashSetC.get(i).size();
+            }
+        }
+
+        System.out.println("Runtime of hashcodeC was " + (secondTimeC - firstTimeC));
+        System.out.println("Average list length of hashcodeC was " + (sumC / nonEmptyListsC));
+        System.out.println("Collisions of hashcodeC were " +collisionsC);
+        System.out.println();
+
+    }
+
+    public static int hashCode(Object s) {
+        //hashCode(s) = Math.abs(s.hashCode()) % tableSize
+        return s.hashCode();
+    }
+
+    public static int hashCode2(Object key) {
+        int h;
+        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+    }
+
+    public static int hashCode3(String s) {
+        byte[] key = null;//not sure
+        byte[] sb = s.getBytes();
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            key = md.digest(sb);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        BitSet bs = BitSet.valueOf(key);
+
+        int[] index = {2, 7, 17, 29, 41, 53, 67, 79, 97, 107, 127, 139, 157, 173, 191, 199, 227, 239,241}; //241
+        boolean[] bitString = new boolean[19];
+        int counter = 0;
+        while (counter < index.length) {
+            bitString[counter] = bs.get(index[counter]);
+            counter++;
+        }
+        return getDecimal(bitString);
+    }
+
+    public static int getDecimal(boolean[] s) {
+        int decimal = 0;
+        int n = 0;
+        int size = s.length;
+        while (true) {
+            if (size == 0) {
+                break;
+            } else {
+                if (s[size - 1] == true) {
+                    int temp = 1;
+                    decimal += temp * Math.pow(2, n);
+                }
+                size--;
+                n++;
+
+            }
+        }
+        return decimal;
+    }
+}
