@@ -1,0 +1,34 @@
+Results for first set of sizes 
+tableSize = 262127
+tableSize2 = 262144
+bitString length is 18
+
+Runtime of hashcodeA was 253.0
+Average list length of hashcodeA was 1.5505287168234843
+Collisions of hashcodeA were 88819
+
+Runtime of hashcodeB was 191.0
+Average list length of hashcodeB was 1.5524339688213682
+Collisions of hashcodeB were 89017
+
+Runtime of hashcodeC was 433.0
+Average list length of hashcodeC was 1.5539769903588112
+Collisions of hashcodeC were 89177
+
+
+Results for second set of sizes 
+tableSize = 524287
+tableSize2 = 524288
+bitString length is 19
+
+Runtime of hashcodeA was 237.0
+Average list length of hashcodeA was 1.2565072380780165
+Collisions of hashcodeA were 51067
+
+Runtime of hashcodeB was 173.0
+Average list length of hashcodeB was 1.2557503288053573
+Collisions of hashcodeB were 50947
+
+Runtime of hashcodeC was 422.0
+Average list length of hashcodeC was 1.2582009677192205
+Collisions of hashcodeC were 51335
