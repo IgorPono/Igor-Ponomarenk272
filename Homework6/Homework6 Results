@@ -32,3 +32,6 @@ Collisions of hashcodeB were 50947
 Runtime of hashcodeC was 422.0
 Average list length of hashcodeC was 1.2582009677192205
 Collisions of hashcodeC were 51335
+
+For best hashing method I would likely choose hashCode A or 1. Although they are all very clustered, hashCodeA ends up having fewer collisions when we approach a higher 
+capacity within the HashSet, allowing for a better worst case scenario runtime.  
