@@ -20,30 +20,6 @@ public class Selection<E extends Comparable<E>> {
                 get(k - 1);
     }
 
-    public E Algorithm1BOld() { // cant use sort in loop.
-        LinkedList<E> temp = new LinkedList<E>();
-        for (int i = 0; i < k; i++) {
-            temp.add(input.get(i));
-        }
-        //System.out.println(temp);
-        Collections.sort(temp, Collections.reverseOrder());
-        //System.out.println(temp);
-        for (int i = k; i < input.size(); i++) {
-            if (temp.get(temp.size() - 1).compareTo(input.get(i)) < 0) {
-                temp.set(temp.size() - 1, input.get(i)); // gets rid of last element, replaces it with the new element
-                int pointer = temp.size()-1;
-                while(pointer!=0 && temp.get(pointer).compareTo(temp.get(pointer-1))>0){
-                    E swap = temp.get(pointer);
-                    temp.set(pointer,temp.get(pointer-1));
-                    temp.set(pointer-1,swap);
-                    pointer--;
-                }
-                //Collections.sort(temp, Collections.reverseOrder());
-                //System.out.println(temp);
-            }
-        }
-        return temp.get(temp.size() - 1);
-    }
 
     public E Algorithm1B() { // cant use sort in loop.
         LinkedList<E> temp = new LinkedList<E>();
