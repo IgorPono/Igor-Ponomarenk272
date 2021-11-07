@@ -1,0 +1,97 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+
+public class Selection<E extends Comparable<E>> {
+    int k;
+    ArrayList<E> input; // this holds the values of type E from which your code will find kth largest.
+
+    // constructors
+    public Selection(int v, ArrayList<E> temp) {
+        input = temp;
+        k = v;
+    }
+
+    public E Algorithm1A() {
+        ArrayList<E> temp = (ArrayList<E>) input.clone();
+        Collections.sort(temp, Collections.reverseOrder());
+        return temp.
+                get(k - 1);
+    }
+
+    public E Algorithm1BOld() { // cant use sort in loop.
+        LinkedList<E> temp = new LinkedList<E>();
+        for (int i = 0; i < k; i++) {
+            temp.add(input.get(i));
+        }
+        //System.out.println(temp);
+        Collections.sort(temp, Collections.reverseOrder());
+        //System.out.println(temp);
+        for (int i = k; i < input.size(); i++) {
+            if (temp.get(temp.size() - 1).compareTo(input.get(i)) < 0) {
+                temp.set(temp.size() - 1, input.get(i)); // gets rid of last element, replaces it with the new element
+                int pointer = temp.size()-1;
+                while(pointer!=0 && temp.get(pointer).compareTo(temp.get(pointer-1))>0){
+                    E swap = temp.get(pointer);
+                    temp.set(pointer,temp.get(pointer-1));
+                    temp.set(pointer-1,swap);
+                    pointer--;
+                }
+                //Collections.sort(temp, Collections.reverseOrder());
+                //System.out.println(temp);
+            }
+        }
+        return temp.get(temp.size() - 1);
+    }
+
+    public E Algorithm1B() { // cant use sort in loop.
+        LinkedList<E> temp = new LinkedList<E>();
+        for (int i = 0; i < k; i++) {
+            temp.add(input.get(i));
+        }
+       // System.out.println(temp);
+        Collections.sort(temp, Collections.reverseOrder());
+       // System.out.println(temp);
+        for (int i = k; i < input.size(); i++) {
+            if (temp.get(temp.size() - 1).compareTo(input.get(i)) < 0) {
+                E newElement = input.get(i);// gets rid of last element, replaces it with the new element
+                temp.removeLast();
+                int pointer = temp.size()-1;
+                while(pointer!=0 && temp.get(pointer).compareTo(newElement)<0){
+                    pointer--;
+                }
+                temp.add(pointer,newElement);
+                //Collections.sort(temp, Collections.reverseOrder());
+               // System.out.println(temp);
+            }
+        }
+        return temp.get(temp.size() - 1);
+    }
+
+    public E Algorithm6A() {
+        PriorityQueue<E> queue = new PriorityQueue<E>(Collections.reverseOrder());
+        for (E var : input)
+            queue.offer(var);
+        for (int i = 0; i < k - 1; i++)
+            queue.poll();
+        return queue.poll();
+    }
+
+    public E Algorithm6B() {
+        PriorityQueue<E> queue = new PriorityQueue(k);
+        for(int i =0;i<k;i++){
+            queue.offer(input.get(i));
+        }
+        for(int i =k;i<input.size();i++){
+            if(queue.peek().compareTo(input.get(i))<0){
+                queue.poll();
+                queue.offer(input.get(i));
+            }
+        }
+        return queue.poll();
+    }
+// algorithm 1 methods -- implement 1B
+// algorithm 2 methods -- 6A -- change the algorithm to do kth largest not kth smallest that is described here
+// algorithm 3 methods – 6B
+}
