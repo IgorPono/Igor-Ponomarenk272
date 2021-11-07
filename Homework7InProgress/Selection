@@ -31,7 +31,7 @@ public class Selection<E extends Comparable<E>> {
        // System.out.println(temp);
         for (int i = k; i < input.size(); i++) {
             if (temp.get(temp.size() - 1).compareTo(input.get(i)) < 0) {
-                E newElement = input.get(i);// gets rid of last element, replaces it with the new element
+                E newElement = input.get(i);
                 temp.removeLast();
                 int pointer = temp.size()-1;
                 while(pointer!=0 && temp.get(pointer).compareTo(newElement)<0){
