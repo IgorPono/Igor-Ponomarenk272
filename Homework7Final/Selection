@@ -1,0 +1,79 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+
+public class Selection<E extends Comparable<E>> {
+    int k;
+    ArrayList<E> input; // this holds the values of type E from which your code will find kth largest.
+
+    // constructors
+    public Selection(int v, ArrayList<E> temp) throws Exception {
+        //      if (v <= 0 || v > temp.size()) {
+        //throw new Exception("K value is out of bounds");
+//
+        //}
+        input = temp;
+        k = v;
+    }
+
+    public E Algorithm1A() {
+        ArrayList<E> temp = (ArrayList<E>) input.clone();
+        Collections.sort(temp, Collections.reverseOrder());
+        return temp.
+                get(k - 1);
+    }
+
+
+
+
+    public E Algorithm1B() {
+
+        LinkedList<E> temp = new LinkedList<E>();
+        for (int i =0; i < k; i++)
+            temp.add(input.get(i));
+        Collections.sort(temp, Collections.reverseOrder());
+        // Go through remaining items
+        for (int i =k; i < input.size(); i++) {
+            if (input.get(i).compareTo(temp.get(k-1)) > 0) {
+                temp.set(k-1, input.get(i));
+                for (int j =k-1; j > 0; j--) {
+                    if (temp.get(j).compareTo(temp.get(j-1)) < 0) break;
+                    E tempElement = temp.get(j);
+                    temp.set(j, temp.get(j-1));
+                    temp.set(j-1, tempElement);
+                }
+            }
+        }
+        return temp.get(temp.size()-1);
+    }
+
+
+
+
+    public E Algorithm6A() {
+        PriorityQueue<E> queue = new PriorityQueue<E>(Collections.reverseOrder());
+        for (E var : input)
+            queue.offer(var);
+        for (int i = 0; i < k - 1; i++)
+            queue.poll();
+        return queue.poll();
+    }
+
+    public E Algorithm6B() {
+        PriorityQueue<E> queue = new PriorityQueue(k);
+        for (int i = 0; i < k; i++) {
+            queue.offer(input.get(i));
+        }
+        for (int i = k; i < input.size(); i++) {
+            if (queue.peek().compareTo(input.get(i)) < 0) {
+                queue.poll();
+                queue.offer(input.get(i));
+            }
+        }
+        return queue.poll();
+    }
+// algorithm 1 methods -- implement 1B
+// algorithm 2 methods -- 6A -- change the algorithm to do kth largest not kth smallest that is described here
+// algorithm 3 methods – 6B
+}
