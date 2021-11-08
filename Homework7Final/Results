@@ -1,0 +1,70 @@
+Igor Ponomarenko
+Comp 272
+Homework 7 Results
+
+Note: Algorithm 1A was not required but I still added it due to its simplicity and to have another reference point for runtime 
+
+Algorithm Name result/runtime
+
+Test 1 
+ArrayList = 1,5,10,7,3,2,17,18 
+K = 1
+
+1A 18/0.0
+1B 18/0.0
+6A 18/0.0
+6B 18/0.0
+
+Test 2 
+ArrayList = 1,5,10,7,3,2,17,18 
+K = 5
+1A 5/0.0
+1B 5/0.0
+6A 5/0.0
+6B 5/0.0
+
+Test 3 
+ArrayList = 1,5,10,7,3,2,17,18 
+K = 2
+
+1A 17/1.0
+1B 17/1.0
+6A 17/0.0
+6B 17/0.0
+
+Test 4 
+ArrayList Size = 10000
+k=1000
+
+1A 899/6.0
+1B 899/1767.0
+6A 899/2.0
+6B 899/2.0
+
+Test 5 
+ArrayList Size = 100000
+K = 10000
+
+1A 900/25.0
+1B 900/1899051.0
+6A 900/11.0
+6B 900/10.0
+
+Test 6 
+ArrayList Size = 1000000
+K = 100000
+
+1A 899/210.0
+1B Inconclusive, took too long to run  
+6A 899/99.0
+6B 899/64.0
+
+
+
+
+
+Conclusions(1A not considered as it was outside the scope of the assignment): Runtime for 1b is out of control, with even the book
+saying it has a runtime of O(N^2). 6A and 6B trade blows and are often very near one another for runtime. Variance will depend on how
+many elements need to be swapped into the auxiliary priority queue, if that amount is minimal it will beat out 6b in runtime, but if 
+elements are constantly required to be inserted and removed into the queue then 6a will win out. 
+
