@@ -1,0 +1,51 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws FileNotFoundException {
+        File file = new File("src/Test.txt");
+        File file2 = new File("src/artist_edges.txt");
+        File file3 = new File("src/Email-Enron.txt");
+        File file4 = new File("src/Email-Enron-small.txt");
+        File test = file3;
+        Scanner initialScan = new Scanner(test);
+        int max = 0;
+        while (initialScan.hasNextInt()) {
+            max = Math.max(max, initialScan.nextInt());
+        }
+        Graph temp = new Graph(max+1);
+
+        Scanner scan = new Scanner(test);
+        while(scan.hasNext()){
+            temp.addEdge(scan.nextInt(),scan.nextInt());
+        }
+
+        //temp.addEdge(0,1);
+        //temp.addEdge(0,9);
+        //temp.addEdge(1,2);
+        //temp.addEdge(1,3);
+        //temp.addEdge(9,5);
+        //temp.addEdge(9,6);
+        //temp.addEdge(10,11);
+        //temp.BFS();
+        //System.out.println();
+        //temp.DFS();
+        //System.out.println();
+        //System.out.println(temp.numOfComponentsBFS());
+        //System.out.println();
+        //System.out.println(temp.numOfComponentsDFS());
+
+        //Graph.flyReading(file);
+       // temp.DFS();
+       // System.out.println();
+        System.out.println(temp.numOfComponentsBFS());
+        System.out.println(temp.numOfComponentsDFS());
+       // System.out.println(temp.numOfTrees());
+       // System.out.println(temp.largestComponent());
+        System.out.println(Graph.flyReading(test));
+        System.out.println(Graph.flyReadingJava(test));
+        //System.out.println(Graph.flyReading(file));
+        //System.out.println(Graph.flyReading(file));
+    }
+}
