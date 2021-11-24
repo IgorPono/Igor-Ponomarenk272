@@ -52,7 +52,7 @@ public class CompressedPaths {
             if (height[a] > height[b])
                 findSet[b] = a;
             else
-                findSet[b] = a;
+                findSet[a] = b;
         }
     }
 
